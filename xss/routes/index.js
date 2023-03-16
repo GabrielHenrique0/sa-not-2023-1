@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const controller = require('../controllers/users')
+const controller = require('../controllers/index')
 
-router.post('/login', controller.login)
+router.get('/', controller.retrieve)
 
 module.exports = router;
