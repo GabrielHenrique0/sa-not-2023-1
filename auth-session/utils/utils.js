@@ -1,15 +1,17 @@
-// verifica se existe usuário autenticado
+// Verifica se existe usuário autenticado
 function checkAuth(req, res, next) {
-
-    //se o usuário estiver logado, passa ao próximo middleware
+  
+    // Se o usuário estiver logado, passa ao próximo middleware
     if(req.session.isLoggedIn) next()
-
-    //guarda a url original e redireciona para o login
-    else{
-        req.session.redirectUrl = req.url 
-        res.redirect('/users/login')
+  
+    // Guarda a url original e redireciona para a página de login
+    else {
+      req.session.redirectUrl = req.url
+      res.redirect('/users/login')
     }
-
-}
-
-module.exports = {checkAuth}
+  
+  }
+  
+  module.exports = {
+    checkAuth
+  }
