@@ -14,8 +14,6 @@ controller.formNew = (req, res) => {
 controller.create = async (req, res) => {
   try {
     // TODO: fazer validação dos dados recebidos
-
-    console.log({BODY: req.body})
     
     // Encriptar a senha
     req.body.password = await bcrypt.hash(req.body.password, 12)
@@ -50,7 +48,7 @@ controller.auth = async (req, res) => {
 
     const user = result.rows[0] // Conferir
 
-    const passwordOK = result.rowCount === 1 &&
+    const passwordOK = result.rowCount === 1 && 
       await bcrypt.compare(req.body.password, user?.password)
 
     if(passwordOK) {
@@ -60,7 +58,8 @@ controller.auth = async (req, res) => {
 
       res.render('feedback', {
         level: 'success',
-        message: 'Login efetuado com sucesso. Usuário autenticado.'
+        message: 'Login efetuado com sucesso. Usuário autenticado.',
+        redirectUrl: req.session.redirectUrl
       })
     }
     else {
@@ -79,6 +78,11 @@ controller.formLogin = (req, res) => {
   res.render('user_login', {
     title: 'Fazer login'
   })
+}
+
+controller.logout = (req, res) => {
+  req.session.destroy()
+  res.redirect('/users/login')
 }
 
 module.exports = controller

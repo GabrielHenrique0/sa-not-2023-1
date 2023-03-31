@@ -27,7 +27,6 @@ const sessionConfig = {
     saveUninitialized: false,
     cookie: {
       maxAge : 7 * 24 * 60 * 60 * 1000,  // 7 dias
-      // secure: true,
       httpOnly: true
     }
 }
