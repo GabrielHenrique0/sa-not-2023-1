@@ -18,20 +18,21 @@ const pgSession = require('connect-pg-simple')(expressSession)
 var app = express();
 
 const helmet = require('helmet')
+app.use(helmet())   // Configurações padrão de segurança do Helmet
 app.use(helmet.hidePoweredBy())
 
 const sessionConfig = {
-    store: new pgSession({
-      pool: dbConn
-    }),
-    name: '$DATA',
-    secret: process.env.COOKIE_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge : 7 * 24 * 60 * 60 * 1000,  // 7 dias
-      httpOnly: true
-    }
+  store: new pgSession({
+    pool: dbConn
+  }),
+  name: '$DATA$',
+  secret: process.env.COOKIE_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge : 7 * 24 * 60 * 60 * 1000,  // 7 dias
+    httpOnly: true
+  }
 }
 
 // Se for ambiente de produção, habilita confiança no primeiro proxy
